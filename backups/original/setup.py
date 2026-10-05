@@ -67,10 +67,6 @@ version_info = ({})
 
 
 def get_version():
-    # Keep metadata builds working when pip runs setup.py egg_info before
-    # the historical generated version file is created.
-    if not os.path.exists(version_file):
-        write_version_py()
     with open(version_file, 'r') as f:
         exec(compile(f.read(), version_file, 'exec'))
     return locals()['__version__']
@@ -106,5 +102,6 @@ if __name__ == '__main__':
             'Programming Language :: Python :: 3.8',
         ],
         license='BSD-3-Clause License',
+        setup_requires=['cython', 'numpy'],
         install_requires=get_requirements(),
         zip_safe=False)

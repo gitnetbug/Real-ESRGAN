@@ -8,7 +8,6 @@ tmp/*
 weights/*
 
 version.py
-!realesrgan/version.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
