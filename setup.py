@@ -67,14 +67,10 @@ version_info = ({})
 
 
 def get_version():
-    # Keep metadata builds working when pip runs setup.py egg_info before
-    # the historical generated version file is created.
-    if not os.path.exists(version_file):
-        write_version_py()
-    with open(version_file, 'r') as f:
-        exec(compile(f.read(), version_file, 'exec'))
-    return locals()['__version__']
-
+    # Read the static VERSION file during metadata generation.
+    # This avoids writing generated files during pip egg_info.
+    with open('VERSION', encoding='utf-8') as f:
+        return f.read().strip()
 
 def get_requirements(filename='requirements.txt'):
     here = os.path.dirname(os.path.realpath(__file__))
@@ -84,7 +80,6 @@ def get_requirements(filename='requirements.txt'):
 
 
 if __name__ == '__main__':
-    write_version_py()
     setup(
         name='realesrgan',
         version=get_version(),
